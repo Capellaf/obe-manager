@@ -1,0 +1,19 @@
+{
+  "name": "node-react",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "cd backend && nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.2",
+    "express": "^4.16.2",
+    "react-hook-form": "^6.7.2",
+    "react-icons": "^3.11.0",
+    "reactstrap": "^8.5.1"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  }
+}
