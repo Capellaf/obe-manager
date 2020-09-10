@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+require('dotenv').config()
 
 const auth = require('./middleware/login');
 const login = require('./controllers/login');
