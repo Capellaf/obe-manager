@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { withRouter } from 'react-router-dom';
 import Logo from "../../assets/logo_full.png";
-import { BiSearchAlt, BiWindows } from "react-icons/bi";
+import { BiSearchAlt } from "react-icons/bi";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { AiOutlineUserAdd } from 'react-icons/ai';
 
@@ -18,7 +18,7 @@ function ShowAlunos (props) {
   const [idDel, setIdDel] = useState('');
 
   const toggle = (id,nome) => {
-    if (modal ===false) {
+    if (modal === false) {
       setNomeDel(nome);
       setIdDel(id);
     }
@@ -55,11 +55,6 @@ function ShowAlunos (props) {
       window.location.reload();
     }
   }
-
-  useEffect(() => {
-    return () => {
-    }
-  }, [])
 
   useEffect(() => {
     const showAlunos = async() => {

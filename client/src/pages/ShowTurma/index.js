@@ -25,11 +25,6 @@ function ShowTurmas (props) {
   }
 
   useEffect(() => {
-    return () => {
-    }
-  }, [])
-
-  useEffect(() => {
     const showTurmas = async() => {
       const response = await fetch('/obeapi/listaTurmas/'+nameSearch, {method: 'GET'});
       const body = await response.json();

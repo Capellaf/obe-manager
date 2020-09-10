@@ -1,5 +1,4 @@
 const db = require('../database/db');
-const bcrypt = require('bcrypt');
 
 const newProf = (object, res) => {
     object = object.data;

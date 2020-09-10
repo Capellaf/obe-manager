@@ -10,6 +10,7 @@ const delProf = require('./controllers/delProf');
 const listaAlunos = require('./controllers/listaAlunos');
 const listaProfessores = require('./controllers/listaProfessores');
 const listaTurmas = require('./controllers/listaTurmas');
+const matchTurma = require('./controllers/matchTurma');
 const newProf = require('./controllers/newProf');
 const newAluno = require('./controllers/newAluno');
 const newTurma = require('./controllers/newTurma');
@@ -42,6 +43,10 @@ app.get('/obeapi/listaProf/:nome?', (req, res) => {
 
 app.get('/obeapi/listaTurmas/:nome?', (req, res) => {
     return listaTurmas(req.params,res)
+})
+
+app.get('/obeapi/listaTurmas/match/:per?', (req, res) => {
+    return matchTurma(req.params,res)
 })
 
 app.post('/obeapi/newProf', auth, (req, res) => {
