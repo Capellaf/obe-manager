@@ -11,6 +11,7 @@ const listaAlunos = require('./controllers/listaAlunos');
 const listaProfessores = require('./controllers/listaProfessores');
 const listaTurmas = require('./controllers/listaTurmas');
 const matchTurma = require('./controllers/matchTurma');
+const matchProf = require('./controllers/matchProf');
 const newProf = require('./controllers/newProf');
 const newAluno = require('./controllers/newAluno');
 const newTurma = require('./controllers/newTurma');
@@ -39,6 +40,10 @@ app.get('/obeapi/listaAlunos/:nome?', (req, res) => {
 
 app.get('/obeapi/listaProf/:nome?', (req, res) => {
     return listaProfessores(req.params,res)
+})
+
+app.get('/obeapi/listaProf/match/:agenda?', (req, res) => {
+    return matchProf(req.params,res)
 })
 
 app.get('/obeapi/listaTurmas/:nome?', (req, res) => {

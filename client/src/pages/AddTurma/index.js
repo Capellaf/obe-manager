@@ -1,37 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { withRouter } from "react-router-dom";
 import Logo from "../../assets/logo_full.png";
 import { Container, NavBar, Menu, Conteudo, CheckSelect } from '../../components/globalstyle'
-import { Form } from "./styles";
+import { Form, ModalDiv, Table } from "./styles";
+import { GiSaveArrow } from 'react-icons/gi';
+import { AiOutlinePlusSquare } from 'react-icons/ai';
+import { GrClose } from 'react-icons/gr';
 
 import { logout, getToken } from '../../services/auth'
 
 function AddTurma() {
   const { register, handleSubmit, errors } = useForm();
+  const [modal, setModal] = useState(false);
+  const [newTurma, setNewTurma] = useState({});
+  const [professor, setProfessor] = useState('')
+  const [agenda, setAgenda] = useState([]);
 
-  const onSubmit = async (data) => {
+  const submitTurma = async (idProfessor, nomeProfessor) => {
+    newTurma.idProfessor = idProfessor;
+    newTurma.nomeProfessor = nomeProfessor;
     const token = getToken();
-    let headers = {'Content-Type': 'application/json'};
+    let headers = {"Content-Type": "application/json"};
     if (token) {
       headers['Authorization'] = `Token ${token}`;
     }
     const response = await fetch('/obeapi/newTurma', {
       method: 'POST',
       headers,
-      body: JSON.stringify({data})
+      body: JSON.stringify(newTurma)
     });
 
     if (response.status === 200) {
-      alert("Turma criada com sucesso!")
+      toggle('');
+      alert("Turma cadastrada com sucesso!")
       window.location.reload();
-    } else if (response.status === 409) {
-      const body = await response.json();
-      alert(body.message)
-    } else {
-      alert("Ocorreu um erro ao criar!");
+    }else if(response.status === 409) {
+      toggle('');
+      alert(response.message);
+    }else {
+      alert("Ocorreu um erro ao cadastrar!");
+      window.location.reaload()
     }
   }
+
+  const toggle = (data) => {
+    if (modal === false) {
+      setNewTurma(data);
+      let diaUm = data.diaUm;
+      let diaDois = data.diaDois;
+      let horaUm = data.horaUm;
+      let horaDois = data.horaDois;
+      let per = parseInt(horaUm);
+      if (per >= 18 ){
+        per = 'notu';
+      } else if (per >= 13) {
+        per = 'vesp';
+      } else {
+        per = 'matu';
+      }
+      setAgenda([diaUm, diaDois, horaUm, horaDois, per])
+    }
+    setModal(!modal);
+  }
+
+  useEffect(() => {
+    const showProfessores = async() => {
+      const response = await fetch('/obeapi/listaProf/match/'+agenda, {method: 'GET'});
+      const body = await response.json();
+
+      if (response.status !== 200) {
+        console.log(body.message)
+      } else{
+        setProfessor(body) //EU ESTOU AQUI ----- MATCH PROFESSOR E TURMA
+      }
+    }
+    showProfessores();
+  }, [agenda])
 
   const handleLogout = async e => {
     e.preventDefault();
@@ -56,10 +101,32 @@ function AddTurma() {
         </div>
       </NavBar>
       <Conteudo>
+      {modal && 
+          <ModalDiv>
+            <div>
+              <button type="close" onClick={() => toggle('')}><GrClose/></button>
+              <h2>Professores disponíveis</h2>
+            </div>
+            <Table>
+                <tr>
+                  <th type="id">Id</th>
+                  <th type="professor">Professor</th>
+                  <th type="btn"><button onClick={() => window.location.replace('/newProf')}><AiOutlinePlusSquare/></button></th>
+                </tr>
+                <tbody>
+                {
+                  professor.map(function(professor){
+                    return <tr><td>{professor.idProfessor}</td> <td>{professor.nome}</td><td type="btn"><button onClick={() => submitTurma(professor.idProfessor, professor.nome)}><GiSaveArrow/></button></td></tr>;
+                  }.bind(this))
+                }
+              </tbody>
+            </Table>
+          </ModalDiv>
+        }
         <button onClick={handleLogout}>Logout</button>
         <h1>Nova Turma</h1>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          {(errors.diahoraUm) && <h5>Todos os campos necessários!</h5>}
+        <Form onSubmit={handleSubmit(toggle)}>
+          {(errors.horaUm) || (errors.horaDois) && <h5>Todos os campos necessários!</h5>}
           <div>
             <CheckSelect>
               <label disabled>Dia e horário 1<hr></hr></label>

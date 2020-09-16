@@ -111,7 +111,6 @@ function ShowAlunos (props) {
             <tr>
               <th type="id">Id</th>
               <th type="nome">Nome</th>
-              <th type="cpf">Cpf</th>
               <th type="email">Email</th>
               <th type="tel">Telefone</th>
               <th type="nivel">Nível</th>
@@ -120,7 +119,7 @@ function ShowAlunos (props) {
             <tbody>
             {
               data.map(function(data){
-                return <tr><td>{data.idAluno}</td> <td>{data.firstName+' '+data.lastName}</td> <td>{data.cpf}</td> <td>{data.email}</td> <td>{data.telefone}</td><td>{data.nivel}</td><td>{data.idTurma}</td><td><button id={data.idAluno} onClick={() => handleEdit(data.idAluno)}><FaPencilAlt/></button></td><td><button onClick={() => toggle(data.idAluno,data.firstName+' '+data.lastName)}><FaTrashAlt/></button></td></tr>;
+                return <tr><td>{data.idAluno}</td> <td>{data.firstName+' '+data.lastName}</td> <td>{data.email}</td> <td>{data.telefone}</td><td>{data.nivel}</td><td>{data.idTurma}</td><td><button id={data.idAluno} onClick={() => handleEdit(data.idAluno)}><FaPencilAlt/></button></td><td><button onClick={() => toggle(data.idAluno,data.firstName+' '+data.lastName)}><FaTrashAlt/></button></td></tr>;
               }.bind(this))
             }
           </tbody>

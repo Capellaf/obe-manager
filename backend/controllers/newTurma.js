@@ -1,7 +1,6 @@
 const db = require('../database/db');
 
 const newTurma = (object, res) => {
-    object = object.data;
     var hr = parseInt(object.horaUm);
     if (hr >= 18 ){
         hr = 'notu';
@@ -16,14 +15,19 @@ const newTurma = (object, res) => {
         object.diaDois,
         object.horaUm,
         object.horaDois,
-        1,
-        'Filipe Capella',
+        object.idProfessor,
+        object.nomeProfessor,
         hr
     ], (err) => {
         if (err) {
-            return res.status(400).send("Falha na inserção!")
+            return res.status(400).send()
         }
-        return res.status(200).send()
+        db.query('UPDATE agendaprof SET '+object.diaUm+'=CONCAT('+object.diaUm+',?), '+object.diaDois+'=CONCAT('+object.diaDois+',?) WHERE idProfessor = ?', [object.horaUm,object.horaDois,object.idProfessor], (err) => {
+            if (err) {
+                return res.status(400).send()
+            }
+            return res.status(200).send()
+        })
     })
 }
 

@@ -21,6 +21,11 @@ const newAluno = (object, res) => {
                 if (err) {
                     return res.status(400).send("Falha na inserção!")
                 }
+                db.query('UPDATE turma SET nAlunos=nAlunos+1 WHERE idTurma = ?', [object.idTurma], (err) => {
+                    if (err) {
+                        return res.status(400).send("Falha ao incrementar turma.")
+                    }
+                })
                 return res.status(200).send()
             })
         }   
