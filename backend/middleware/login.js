@@ -7,6 +7,6 @@ module.exports = (req, res, next) => {
         req.user = decode;
         next()
     } catch (err) {
-        return res.status(401).send( { message: "Falha na autenticação!"})
+        return res.status(401).send( { message: "Falha na autenticação!" })
     }
 }
