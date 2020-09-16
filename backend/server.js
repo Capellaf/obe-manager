@@ -60,11 +60,11 @@ app.post('/obeapi/newProf', auth, (req, res) => {
     return newProf(req.body,res)
 })
 
-app.post('/obeapi/newAluno', (req, res) => {
+app.post('/obeapi/newAluno', auth, (req, res) => {
     return newAluno(req.body,res)
 })
 
-app.post('/obeapi/newTurma', (req, res) => {
+app.post('/obeapi/newTurma', auth, (req, res) => {
     return newTurma(req.body,res)
 })
 

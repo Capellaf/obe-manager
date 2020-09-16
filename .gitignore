@@ -1,6 +1,5 @@
 .env
 node_modules
-obedb.sql
 .vscode
 nodemon.json
 ESC
