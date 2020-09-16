@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config()
 
 const auth = require('./middleware/login');
@@ -17,10 +18,11 @@ const newAluno = require('./controllers/newAluno');
 const newTurma = require('./controllers/newTurma');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 app.post('/obeapi/login', (req, res) => {
     return login(req.body,res)
