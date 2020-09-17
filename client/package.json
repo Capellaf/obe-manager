@@ -14,7 +14,12 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.1.1",
+    "bootstrap": "^4.5.2",
+    "dotenv": "^8.2.0",
+    "react-hook-form": "^6.7.2",
+    "react-icons": "^3.11.0",
+    "reactstrap": "^8.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
