@@ -5,6 +5,8 @@ import Logo from '../../assets/logo.png';
 
 import { login } from "../../services/auth";
 
+import api from '../../services/api';
+
 function SignIn() {
   const [username, setUsername] = useState('');
   const [pass, setPass] = useState('');
@@ -15,8 +17,17 @@ function SignIn() {
     if (!username || !pass) {
       setError("Preencha todos os campos!");
     } else {
+      /*api.post('/login', {username, pass}).then(async (response) => {
+        const body = response.data;
+        if (response.status !== 200){
+          setError(body.message)
+          return
+        }
+        login(body.token)
+        window.location = ("/alunos");
+      });*/
       try { 
-        const response = await fetch("/obeapi/login", {
+        const response = await fetch("http://obemanager-com-br.umbler.net/obeapi/login", {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, pass })
